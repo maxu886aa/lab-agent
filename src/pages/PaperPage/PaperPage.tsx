@@ -14,8 +14,7 @@ import {
 } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { toast } from 'sonner';
-import { capabilityClient } from '@lark-apaas/client-toolkit-lite';
-import { logger } from '@lark-apaas/client-toolkit-lite';
+import { chatWithAI } from '@/lib/api';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 
@@ -26,15 +25,12 @@ const WRITING_TOOLS = [
   { id: 'discussion', label: '讨论分析', icon: Lightbulb, desc: '深入讨论结果意义' },
 ];
 
-const PAPER_WRITING_PLUGIN_ID = 'paper-writing-assistant';
-
 export default function PaperPage() {
   const [activeTool, setActiveTool] = useState('abstract');
   const [inputText, setInputText] = useState('');
   const [outputText, setOutputText] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [targetJournal, setTargetJournal] = useState('elsevier');
-  const [section, setSection] = useState('abstract');
 
   const handleGenerate = async () => {
     if (!inputText.trim()) {
@@ -53,22 +49,10 @@ export default function PaperPage() {
         discussion: `请作为食品科学领域的专业论文写作助手，帮我深化以下讨论部分的分析，目标期刊为 ${targetJournal}。要求：深入分析结果意义、与前人研究对比、指出研究局限、展望未来方向。\n\n原文：\n${inputText}`,
       };
 
-      const stream = capabilityClient
-        .load(PAPER_WRITING_PLUGIN_ID)
-        .callStream('textGenerate', {
-          prompt: prompts[activeTool] || prompts.abstract,
-        });
-
-      let full = '';
-      for await (const chunk of stream) {
-        const c = chunk as { content?: string };
-        if (c.content) {
-          full += c.content;
-          setOutputText(full);
-        }
-      }
+      const reply = await chatWithAI(prompts[activeTool] || prompts.abstract);
+      setOutputText(reply);
     } catch (error) {
-      logger.error('生成失败:', String(error));
+      console.error('生成失败:', error);
       toast.error('生成失败，请稍后重试');
     } finally {
       setIsLoading(false);

@@ -14,14 +14,12 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
-import { ILiterature, MOCK_LITERATURES } from '@/data/literature';
+import { type ILiterature, MOCK_LITERATURES } from '@/data/literature';
 import { storage } from '@/lib/storage';
 import { toast } from 'sonner';
-import { capabilityClient, logger } from '@lark-apaas/client-toolkit-lite';
+import { chatWithAI } from '@/lib/api';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-
-const LITERATURE_PARSE_PLUGIN_ID = 'food_safety_literature_search_summary_1';
 
 const TYPE_LABELS: Record<string, string> = {
   journal: '期刊论文',
@@ -98,22 +96,12 @@ export default function LiteratureDetailPage() {
     setActiveTab('extracted');
 
     try {
-      const stream = capabilityClient
-        .load(LITERATURE_PARSE_PLUGIN_ID)
-        .callStream('searchSummary', {
-          search_keywords: lit.title + ' 关键数据提取 LD50 NOAEL ADI 检出限 回收率',
-        });
-
-      let full = '';
-      for await (const rawChunk of stream) {
-        const chunk = rawChunk as { summary?: string };
-        if (chunk.summary) {
-          full += chunk.summary;
-          setParseResult(full);
-        }
-      }
+      const reply = await chatWithAI(
+        `请分析以下食品科学文献的关键数据：文献标题《${lit.title}》，作者：${lit.authors.join('、')}，期刊：${lit.journal}，年份：${lit.year}。请提取LD50、NOAEL、ADI、检出限(LOD)、定量限(LOQ)、加标回收率、精密度(RSD)、研究方法概述和核心结论。`
+      );
+      setParseResult(reply);
     } catch (error) {
-      logger.error('Parse error:', String(error));
+      console.error('Parse error:', error);
       toast.error('文献解析失败，请稍后重试');
     } finally {
       setIsParsing(false);

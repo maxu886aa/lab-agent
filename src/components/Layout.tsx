@@ -4,7 +4,6 @@ import AppSidebar from '@/components/AppSidebar';
 import { Bell, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { avatarImages } from '@lark-apaas/client-toolkit-lite';
 
 export function Layout() {
   return (
@@ -21,7 +20,7 @@ export function Layout() {
               <Bell className="size-4" />
             </Button>
             <Avatar className="h-8 w-8">
-              <AvatarImage src={avatarImages.avatarImg1} alt="用户头像" />
+              <AvatarImage src="https://api.dicebear.com/9.x/avataaars/svg?seed=default" alt="用户头像" />
               <AvatarFallback>
                 <User className="size-4" />
               </AvatarFallback>

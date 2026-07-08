@@ -8,7 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { ILiterature, MOCK_LITERATURES } from '@/data/literature';
+import { type ILiterature, MOCK_LITERATURES } from '@/data/literature';
 import { storage } from '@/lib/storage';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';

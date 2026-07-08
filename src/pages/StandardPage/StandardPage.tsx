@@ -13,7 +13,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { IStandard, MOCK_STANDARDS } from '@/data/standards';
+import { type IStandard, MOCK_STANDARDS } from '@/data/standards';
 import { storage } from '@/lib/storage';
 import { toast } from 'sonner';
 import {

@@ -1,7 +1,14 @@
 import { globalIgnores } from 'eslint/config'
-import { eslintPresets } from '@lark-apaas/coding-presets-react'
+import js from '@eslint/js'
 
 export default [
   globalIgnores(['dist', '**/components/ui/**']),
-  ...eslintPresets.client,
+  {
+    ...js.configs.recommended,
+    rules: {
+      ...js.configs.recommended.rules,
+      'no-unused-vars': 'warn',
+      'no-console': 'off',
+    },
+  },
 ]

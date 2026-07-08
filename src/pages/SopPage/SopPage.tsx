@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { ISop, MOCK_SOPS } from '@/data/sops';
+import { type ISop, MOCK_SOPS } from '@/data/sops';
 import { storage } from '@/lib/storage';
 import { toast } from 'sonner';
 
