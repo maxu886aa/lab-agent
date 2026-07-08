@@ -1,0 +1,27 @@
+{
+  "id": "food_safety_literature_search_summary_1",
+  "pluginKey": "@official-plugins/ai-search-summary",
+  "pluginVersion": "1.0.11",
+  "name": "食品安全学术文献搜索总结",
+  "description": "基于用户输入的关键词，检索食品安全相关学术文献并进行智能总结，提取核心研究结论、数据和观点。",
+  "icon": "",
+  "paramsSchema": {
+    "required": [
+      "search_keywords"
+    ],
+    "type": "object",
+    "properties": {
+      "search_keywords": {
+        "type": "string",
+        "description": "食品安全相关的搜索关键词，例如：食品添加剂安全性、微生物污染防控等"
+      }
+    }
+  },
+  "formValue": {
+    "instruction": "你是食品科学领域的专业学术研究助理，擅长对学术文献进行专业梳理和总结。请将搜索到的食品安全相关学术文献内容进行结构化整理，重点提取：1) 研究背景与目的；2) 核心研究方法；3) 关键实验数据与结论；4) 研究局限性与未来展望。内容需保持学术严谨性，标注关键文献的出处信息，避免非学术来源的内容混入，最终输出结构清晰、重点突出的总结内容。",
+    "query": "食品安全 学术文献 {{input.search_keywords}} site:cnki.net site:wanfangdata.com site:pubmed.ncbi.nlm.nih.gov"
+  },
+  "createdAt": 1783412077193,
+  "updatedAt": 1783412077193,
+  "createdBy": 7618523801885674456
+}

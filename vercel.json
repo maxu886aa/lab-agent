@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "buildCommand": "npm install",
+  "installCommand": "npm install",
+  "devCommand": "node server.mjs",
+  "routes": [
+    {
+      "src": "/api/chat",
+      "dest": "/api/chat"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/server.mjs"
+    }
+  ]
+}
